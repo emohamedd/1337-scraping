@@ -61,6 +61,7 @@ checkin_message = "New 'check-ins' spots will open soon. To be informed when som
 soup = BeautifulSoup(driver.page_source, 'html.parser')
 old_content = checkin_message in soup.text
 
+send_telegram_message("🤖 1337 Bot started successfully  -- Waiting For New Update 🔄")
 while True:
     driver.refresh()
 
