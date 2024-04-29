@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
-
+    
 print(Fore.RED + Style.BRIGHT + """
  ██╗██████╗ ██████╗ ███████╗              ███████╗ ██████╗██████╗ ██╗██████╗ ████████╗
 ███║╚════██╗╚════██╗╚════██║              ██╔════╝██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝
@@ -29,7 +29,8 @@ load_dotenv()
 TOKEN = os.getenv('TOKEN')
 CHAT_ID = os.getenv('CHAT_ID')
 
-url = "https://candidature.1337.ma/meetings"
+# url = "https://candidature.1337.ma/meetings"
+url = "https://candidature.1337.ma/piscines"
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -56,17 +57,20 @@ time.sleep(5)
 
 driver.get(url)
 
-checkin_message = "New 'check-ins' spots will open soon. To be informed when some will open, you can follow us on twitter or like us on facebook:"
+# checkin_message = "New 'check-ins' spots will open soon. To be informed when some will open, you can follow us on twitter or like us on facebook:" # Check-in message
+pool_message = "No Piscines are currently open. To be informed when it will open, you can follow us on twitter or like us on facebook:" # Pool message
 
 soup = BeautifulSoup(driver.page_source, 'html.parser')
-old_content = checkin_message in soup.text
+# old_content = checkin_message in soup.text 
+old_content = pool_message in soup.text
 
 send_telegram_message("🤖 1337 Bot started successfully  -- Waiting For New Update 🔄")
 while True:
     driver.refresh()
 
     soup = BeautifulSoup(driver.page_source, 'html.parser')
-    new_content = checkin_message in soup.text
+    # new_content = checkin_message in soup.text
+    new_content = pool_message in soup.text
 
     if new_content != old_content:
         print(Fore.RED + Style.BRIGHT + "🚨 CHECK-IN 🚨" + Style.RESET_ALL)
